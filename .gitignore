@@ -1,0 +1,13 @@
+venv/
+**pycache**/
+*.pyc
+
+data/raw/
+
+resultados/graficos/
+
+.vscode/
+.idea/
+
+.DS_Store
+Thumbs.db
