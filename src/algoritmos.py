@@ -1,5 +1,7 @@
 import networkx as nx
 
+#Alcance vehicular
+
 def alcance_vehicular(G, origen, max_dist=5000):
 
     distancias = nx.single_source_dijkstra_path_length(

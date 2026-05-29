@@ -49,7 +49,8 @@ def cargar_grafo():
 
         # si no es one way
         # agregar regreso
-
+        #si no es oneway   aumento de ida y vuelta... aumento de nodos.... 
+        
         if row["oneway"] == 0:
 
             G.add_edge(
