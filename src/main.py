@@ -1,3 +1,4 @@
+import time
 from limpieza import limpiar_datasets
 from construir_grafo import cargar_grafo
 
@@ -20,7 +21,17 @@ from analisis import (
 # CONSTRUIR GRAFO
 # =========================
 
+inicio = time.time()
+
 G = cargar_grafo()
+
+fin = time.time()
+
+print(
+    "Tiempo construcción grafo:",
+    round(fin - inicio, 2),
+    "segundos"
+)
 
 # =========================
 # NODO ORIGEN
@@ -32,15 +43,35 @@ origen = list(G.nodes())[0]
 # ALCANCE VEHICULAR (5 KM)
 # =========================
 
+inicio = time.time()
+
 alcance_vehicular(G, origen)
 
+fin = time.time()
+
 print("Nodo origen:", origen)
+
+print(
+    "Tiempo alcance vehicular:",
+    round(fin - inicio, 2),
+    "segundos"
+)
 
 # =========================
 # ISLAS VIALES (Debilmente conectadas y la red conectada mas grande..) / (2241.58 km) Pando → Tarija
 # =========================
 
+inicio = time.time()
+
 gigante = analizar_componentes(G)
+
+fin = time.time()
+
+print(
+    "Tiempo análisis componentes:",
+    round(fin - inicio, 2),
+    "segundos"
+)
 
 # componente gigante
 SG = G.subgraph(gigante).copy()
@@ -59,8 +90,18 @@ mst_emergencia(SG)
 
 # BONUS: Ruta por tipo de horario. 
 
+inicio = time.time()
+
 comparar_distancia_tiempo(
     SG,
     origen_d,
     destino_d
+)
+
+fin = time.time()
+
+print(
+    "Tiempo bonus:",
+    round(fin - inicio, 2),
+    "segundos"
 )
