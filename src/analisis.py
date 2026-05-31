@@ -1,5 +1,4 @@
 import networkx as nx
-import networkx as nx
 import random
 import time
 
@@ -74,7 +73,7 @@ def diametro_aproximado(G, muestra=1000):
 
     fin = time.time()
 
-    print("Diámetro aproximado:", round(max_distancia, 2), "m")
+    print("Diámetro aproximado:", round(max_distancia/1000, 2), "Km")
 
     print(
         "Entre nodos:",
@@ -152,3 +151,76 @@ def mst_emergencia(G):
 
     return mst
 
+def comparar_distancia_tiempo(G, origen, destino):
+
+    print("\n===== BONUS =====")
+
+    try:
+
+        # Ruta optimizada por distancia
+        ruta_d = nx.shortest_path(
+            G,
+            origen,
+            destino,
+            weight="weight"
+        )
+
+        distancia_d = nx.shortest_path_length(
+            G,
+            origen,
+            destino,
+            weight="weight"
+        )
+
+        tiempo_d = 0
+
+        for u, v in zip(ruta_d[:-1], ruta_d[1:]):
+            tiempo_d += G[u][v]["time"]
+
+        # Ruta optimizada por tiempo
+        ruta_t = nx.shortest_path(
+            G,
+            origen,
+            destino,
+            weight="time"
+        )
+
+        tiempo_t = nx.shortest_path_length(
+            G,
+            origen,
+            destino,
+            weight="time"
+        )
+
+        distancia_t = 0
+
+        for u, v in zip(ruta_t[:-1], ruta_t[1:]):
+            distancia_t += G[u][v]["weight"]
+
+        print("\nRuta optimizada por DISTANCIA")
+        print(
+            f"Distancia: {round(distancia_d/1000,2)} km"
+        )
+        print(
+            f"Tiempo: {round(tiempo_d/60,2)} min"
+        )
+        print(
+            f"Nodos: {len(ruta_d)}"
+        )
+
+        print("\nRuta optimizada por TIEMPO")
+        print(
+            f"Distancia: {round(distancia_t/1000,2)} km"
+        )
+        print(
+            f"Tiempo: {round(tiempo_t/60,2)} min"
+        )
+        print(
+            f"Nodos: {len(ruta_t)}"
+        )
+
+    except nx.NetworkXNoPath:
+
+        print(
+            "No existe ruta entre los nodos seleccionados"
+        )

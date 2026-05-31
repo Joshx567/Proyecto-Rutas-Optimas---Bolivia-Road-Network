@@ -39,10 +39,15 @@ def cargar_grafo():
 
     for _, row in edges.iterrows():
 
+        velocidad_ms = row["maxspeed"] * 1000 / 3600
+
+        tiempo_s = row["distance_m"] / velocidad_ms
+
         G.add_edge(
             row["from_id"],
             row["to_id"],
             weight=row["distance_m"],
+            time=tiempo_s,
             maxspeed=row["maxspeed"],
             fclass=row["fclass"]
         )
@@ -57,6 +62,7 @@ def cargar_grafo():
                 row["to_id"],
                 row["from_id"],
                 weight=row["distance_m"],
+                time=tiempo_s,
                 maxspeed=row["maxspeed"],
                 fclass=row["fclass"]
             )

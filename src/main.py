@@ -1,9 +1,14 @@
 from limpieza import limpiar_datasets
 from construir_grafo import cargar_grafo
+
 from algoritmos import alcance_vehicular
-from analisis import analizar_componentes 
-from analisis import diametro_aproximado
-from analisis import mst_emergencia
+
+from analisis import (
+    analizar_componentes,
+    diametro_aproximado,
+    mst_emergencia,
+    comparar_distancia_tiempo
+)
 
 # =========================
 # LIMPIEZA
@@ -24,7 +29,7 @@ G = cargar_grafo()
 origen = list(G.nodes())[0]
 
 # =========================
-# ALCANCE VEHICULAR
+# ALCANCE VEHICULAR (5 KM)
 # =========================
 
 alcance_vehicular(G, origen)
@@ -32,22 +37,30 @@ alcance_vehicular(G, origen)
 print("Nodo origen:", origen)
 
 # =========================
-# ISLAS VIALES
+# ISLAS VIALES (Debilmente conectadas y la red conectada mas grande..) / (2241.58 km) Pando → Tarija
 # =========================
 
 gigante = analizar_componentes(G)
 
-# =========================
-# Diámetro vial
+# componente gigante
+SG = G.subgraph(gigante).copy()
+
+# ========================= 
+# Diámetro vial (Muestra de 1000)
 # =========================
 
-diametro_aproximado(G)
+origen_d, destino_d, diametro = diametro_aproximado(SG)
 
 # =========================
-# Red de emergencia mínima (MST)
+# Red de emergencia mínima (MST) (Toda la red conectada)
 # =========================
 
-mst_emergencia(G)
+mst_emergencia(SG)
 
 # BONUS: Ruta por tipo de horario. 
 
+comparar_distancia_tiempo(
+    SG,
+    origen_d,
+    destino_d
+)
