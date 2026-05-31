@@ -1,7 +1,7 @@
 import time
 from limpieza import limpiar_datasets
 from construir_grafo import cargar_grafo
-
+from comparacion_algoritmos import comparar_dijkstra_bellmanford
 from algoritmos import alcance_vehicular
 
 from analisis import (
@@ -104,4 +104,12 @@ print(
     "Tiempo bonus:",
     round(fin - inicio, 2),
     "segundos"
+)
+
+#BELLMAN-FORD VS DIJKSTRA
+
+comparar_dijkstra_bellmanford(
+    SG,
+    origen_d,
+    destino_d
 )
